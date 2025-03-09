@@ -6,17 +6,17 @@ from app.protocols import HasContent
 class Displayer(ABC):
     @staticmethod
     @abstractmethod
-    def display(obj: HasContent) -> None:
+    def display(obj: HasContent) -> str:
         pass
 
 
 class ConsoleDisplayer(Displayer):
     @staticmethod
-    def display(obj: HasContent) -> None:
-        print(obj.content)
+    def display(obj: HasContent) -> str:
+        return obj.content
 
 
 class ReverseDisplayer(Displayer):
     @staticmethod
-    def display(obj: HasContent) -> None:
-        print(obj.content[::-1])
+    def display(obj: HasContent) -> str:
+        return obj.content[::-1]

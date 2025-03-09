@@ -1,3 +1,5 @@
+from typing import Optional
+
 from app.book import Book
 from app.printers import BookConsolePrinter, BookReversePrinter
 from app.displayers import ConsoleDisplayer, ReverseDisplayer
@@ -20,7 +22,9 @@ ACTIONS = {
 }
 
 
-def main(book: Book, commands: list[tuple[str, str]]) -> None | str:
+def main(book: Book, commands: list[tuple[str, str]]) -> Optional[str]:
+    results = []
+
     for cmd, method_type in commands:
 
         if cmd not in ACTIONS:
@@ -37,10 +41,16 @@ def main(book: Book, commands: list[tuple[str, str]]) -> None | str:
 
         result = action(book)
 
-        if cmd == "serialize":
-            return result
+        results.append(result)
+
+        print(result)
+
+    return " ".join(results)
 
 
 if __name__ == "__main__":
     sample_book = Book("Sample Book", "This is some sample content.")
-    print(main(sample_book, [("display", "reverse"), ("serialize", "xml")]))
+    commands = [
+        ("display", "reverse"), ("serialize", "json"), ("display", "console")
+    ]
+    main(sample_book, commands)
